@@ -29,15 +29,21 @@ const App: React.FC = () => {
     indoAlign: 'center',
     
     backgroundColor: '#ffffff',
+    backgroundImage: undefined,
     isTransparent: false,
     showSurahInfo: true,
     showDivider: true,
     verticalPosition: 'center',
     contentGap: 32,
     horizontalPadding: 32,
+
+    showOverlay: true,
+    overlayColor: '#000000',
+    overlayOpacity: 40,
   });
 
   const canvasRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetchSurahs().then(setSurahs);
@@ -58,20 +64,33 @@ const App: React.FC = () => {
     setLoading(false);
   };
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setSettings({ ...settings, backgroundImage: event.target?.result as string, isTransparent: false });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const clearImage = () => {
+    setSettings({ ...settings, backgroundImage: undefined });
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
   const handleExport = async (format: 'png' | 'jpg') => {
     if (!canvasRef.current) return;
     setExporting(true);
     
     try {
       const scale = 3; 
-      // Untuk transparansi yang benar di html-to-image, backgroundColor harus null
       const options = {
         pixelRatio: scale,
         quality: 1,
         backgroundColor: (settings.isTransparent && format === 'png') ? null : settings.backgroundColor,
-        // Cache busting untuk menghindari masalah CORS dengan font Google
         cacheBust: true,
-        // Menangani stylesheet yang gagal dibaca karena CORS
         style: {
           transform: 'scale(1)',
           transformOrigin: 'top left'
@@ -122,7 +141,7 @@ const App: React.FC = () => {
 
   const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
 
-  // Dynamic Styles for UI based on Dark Mode
+  // Dynamic Styles
   const uiBg = isDarkMode ? 'bg-gray-950' : 'bg-gray-100';
   const sidebarBg = isDarkMode ? 'bg-gray-900' : 'bg-white';
   const textColor = isDarkMode ? 'text-white' : 'text-gray-800';
@@ -151,7 +170,6 @@ const App: React.FC = () => {
 
   return (
     <div className={`h-screen flex flex-col ${uiBg} transition-colors duration-300 overflow-hidden`}>
-      {/* Universal Header - Fixed at Top */}
       <header className={`flex items-center justify-between px-6 py-4 border-b transition-colors duration-300 z-50 ${sidebarBg} ${borderColor} flex-shrink-0`}>
         <div className="flex items-center gap-3">
           <div className="bg-emerald-600 p-2 rounded-lg shadow-md">
@@ -174,8 +192,6 @@ const App: React.FC = () => {
       </header>
 
       <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
-        
-        {/* Main Canvas Preview - Fixed area on Mobile top */}
         <main className={`flex-none md:flex-1 h-[60vh] md:h-full flex items-center justify-center overflow-hidden transition-colors duration-300 p-4 md:p-10 ${isDarkMode ? 'bg-gray-950' : 'bg-gray-200'}`}>
           <div 
             style={{
@@ -184,7 +200,6 @@ const App: React.FC = () => {
             } as any}
             className="flex-shrink-0 origin-center relative"
           >
-            {/* Checkerboard Pattern Wrapper (Hanya untuk preview, tidak ikut diekspor) */}
             <div 
               className="absolute inset-0 shadow-[0_50px_100px_rgba(0,0,0,0.3)] rounded-sm overflow-hidden pointer-events-none"
               style={{
@@ -194,7 +209,6 @@ const App: React.FC = () => {
               }}
             />
 
-            {/* Actual Exportable Canvas */}
             <div 
               ref={canvasRef}
               className="relative overflow-hidden transition-all rounded-sm flex-shrink-0 z-10"
@@ -204,6 +218,23 @@ const App: React.FC = () => {
                 backgroundColor: settings.isTransparent ? 'transparent' : settings.backgroundColor,
               }}
             >
+              {/* Background Photo Layer */}
+              {settings.backgroundImage && (
+                <div className="absolute inset-0 z-0">
+                  <img src={settings.backgroundImage} className="w-full h-full object-cover" alt="Background" />
+                  {/* Overlay Layer */}
+                  {settings.showOverlay && (
+                    <div 
+                      className="absolute inset-0 z-0 transition-all"
+                      style={{ 
+                        backgroundColor: settings.overlayColor,
+                        opacity: settings.overlayOpacity / 100
+                      }}
+                    />
+                  )}
+                </div>
+              )}
+
               <div className={`absolute inset-0 flex flex-col z-10 ${
                 settings.verticalPosition === 'start' ? 'justify-start pt-24' : 
                 settings.verticalPosition === 'center' ? 'justify-center' : 
@@ -228,7 +259,8 @@ const App: React.FC = () => {
                         lineHeight: settings.arabicLineHeight,
                         textAlign: settings.arabicAlign,
                         direction: 'rtl',
-                        marginBottom: `${settings.contentGap}px`
+                        marginBottom: `${settings.contentGap}px`,
+                        textShadow: settings.backgroundImage ? '0 2px 10px rgba(0,0,0,0.5)' : 'none'
                       }}
                     >
                       {verseData.teksArab}
@@ -242,20 +274,24 @@ const App: React.FC = () => {
                         color: settings.indoColor,
                         lineHeight: settings.indoLineHeight,
                         textAlign: settings.indoAlign,
+                        textShadow: settings.backgroundImage ? '0 2px 10px rgba(0,0,0,0.5)' : 'none'
                       }}
                     >
                       {verseData.teksIndonesia}
                     </div>
 
                     {settings.showSurahInfo && (
-                      <div className={`mt-8 pt-5 w-full flex justify-between items-end opacity-50 text-[11px] uppercase tracking-widest font-black ${
+                      <div className={`mt-8 pt-5 w-full flex justify-between items-end opacity-70 text-[11px] uppercase tracking-widest font-black ${
                         settings.showDivider ? 'border-t border-current/20' : ''
                       } ${
                         settings.verticalPosition === 'end' ? 'order-first mb-8 mt-0 border-t-0 pb-5' : ''
                       } ${
                         settings.verticalPosition === 'end' && settings.showDivider ? 'border-b border-current/20' : ''
                       }`}
-                        style={{ color: settings.indoColor }}
+                        style={{ 
+                          color: settings.indoColor,
+                          textShadow: settings.backgroundImage ? '0 2px 10px rgba(0,0,0,0.5)' : 'none'
+                        }}
                       >
                         <span>QS. {surahs.find(s => s.nomor === selectedSurah)?.namaLatin}</span>
                         <span>Ayat {selectedVerse}</span>
@@ -273,11 +309,9 @@ const App: React.FC = () => {
           </div>
         </main>
 
-        {/* Sidebar - Settings Panel */}
         <aside className={`w-full md:w-96 flex flex-col flex-1 md:flex-none transition-colors duration-300 ${sidebarBg} ${borderColor} border-t md:border-t-0 md:border-r overflow-hidden shadow-2xl z-20`}>
           <div className="flex-1 overflow-y-auto p-6 space-y-8 scroll-smooth">
             
-            {/* Presets Manager */}
             <section className="space-y-4">
               <h2 className={`text-xs font-black ${subTextColor} uppercase tracking-widest`}>Presets Pengaturan</h2>
               <div className="flex gap-2">
@@ -436,22 +470,27 @@ const App: React.FC = () => {
                     onChange={(e) => setSettings({...settings, arabicColor: e.target.value})}
                   />
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-4">
                 <select 
-                  className={`p-3 rounded-xl text-sm outline-none cursor-pointer ${inputBg}`}
+                  className={`w-full p-3 rounded-xl text-sm outline-none cursor-pointer ${inputBg}`}
                   value={settings.arabicFont}
                   onChange={(e) => setSettings({...settings, arabicFont: e.target.value})}
                 >
                   {ARABIC_FONTS.map(f => <option key={f.name} value={f.family}>{f.name}</option>)}
                 </select>
-                <div className="relative">
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <label className={`text-[10px] font-bold ${subTextColor} uppercase px-1`}>Ukuran Font Arab</label>
+                    <span className={`text-[11px] font-black ${textColor}`}>{settings.arabicSize}px</span>
+                  </div>
                   <input 
-                    type="number" 
-                    className={`w-full p-3 rounded-xl text-sm outline-none ${inputBg}`}
+                    type="range" 
+                    min="20" 
+                    max="150" 
+                    className="w-full h-2 bg-emerald-100/30 rounded-lg appearance-none cursor-pointer accent-emerald-600"
                     value={settings.arabicSize}
                     onChange={(e) => setSettings({...settings, arabicSize: Number(e.target.value)})}
                   />
-                  <span className="absolute right-3 top-3.5 text-[10px] font-bold opacity-30">PX</span>
                 </div>
               </div>
             </section>
@@ -466,28 +505,34 @@ const App: React.FC = () => {
                     onChange={(e) => setSettings({...settings, indoColor: e.target.value})}
                   />
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-4">
                 <select 
-                  className={`p-3 rounded-xl text-sm outline-none cursor-pointer ${inputBg}`}
+                  className={`w-full p-3 rounded-xl text-sm outline-none cursor-pointer ${inputBg}`}
                   value={settings.indoFont}
                   onChange={(e) => setSettings({...settings, indoFont: e.target.value})}
                 >
                   {INDO_FONTS.map(f => <option key={f.name} value={f.family}>{f.name}</option>)}
                 </select>
-                <div className="relative">
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <label className={`text-[10px] font-bold ${subTextColor} uppercase px-1`}>Ukuran Font Terjemahan</label>
+                    <span className={`text-[11px] font-black ${textColor}`}>{settings.indoSize}px</span>
+                  </div>
                   <input 
-                    type="number" 
-                    className={`w-full p-3 rounded-xl text-sm outline-none ${inputBg}`}
+                    type="range" 
+                    min="10" 
+                    max="80" 
+                    className="w-full h-2 bg-emerald-100/30 rounded-lg appearance-none cursor-pointer accent-emerald-600"
                     value={settings.indoSize}
                     onChange={(e) => setSettings({...settings, indoSize: Number(e.target.value)})}
                   />
-                  <span className="absolute right-3 top-3.5 text-[10px] font-bold opacity-30">PX</span>
                 </div>
               </div>
             </section>
 
-            <section className="space-y-4">
+            <section className="space-y-6">
               <h2 className={`text-xs font-black ${subTextColor} uppercase tracking-widest`}>Latar Belakang</h2>
+              
               <div className={`flex items-center justify-between p-4 rounded-xl border transition-all ${isDarkMode ? 'bg-gray-800/30 border-gray-700/50' : 'bg-gray-50 border-gray-200/50'}`}>
                 <label htmlFor="transparent" className={`text-sm font-semibold ${textColor}`}>Latar Transparan (PNG)</label>
                 <input 
@@ -495,28 +540,98 @@ const App: React.FC = () => {
                   id="transparent"
                   className="w-6 h-6 accent-emerald-600 rounded-lg cursor-pointer"
                   checked={settings.isTransparent}
-                  onChange={(e) => setSettings({...settings, isTransparent: e.target.checked})}
+                  onChange={(e) => setSettings({...settings, isTransparent: e.target.checked, backgroundImage: e.target.checked ? undefined : settings.backgroundImage})}
                 />
               </div>
-              {!settings.isTransparent && (
-                <div className="relative group">
+
+              {/* Background Color */}
+              {!settings.isTransparent && !settings.backgroundImage && (
+                <div className="space-y-2">
+                  <label className={`text-[10px] font-bold ${subTextColor} uppercase px-1`}>Warna Latar</label>
                   <input 
                     type="color" 
-                    className={`w-full h-14 p-1.5 rounded-2xl cursor-pointer transition-all ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-300'} border-2`}
+                    className={`w-full h-12 p-1 rounded-xl cursor-pointer ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-300'} border-2`}
                     value={settings.backgroundColor}
                     onChange={(e) => setSettings({...settings, backgroundColor: e.target.value})}
                   />
                 </div>
               )}
+
+              {/* Background Photo */}
+              {!settings.isTransparent && (
+                <div className="space-y-3">
+                   <label className={`text-[10px] font-bold ${subTextColor} uppercase px-1`}>Foto Latar</label>
+                   <div className="flex gap-2">
+                    <button 
+                      onClick={() => fileInputRef.current?.click()}
+                      className={`flex-1 py-3 px-4 rounded-xl text-xs font-black uppercase tracking-tighter transition-all flex items-center justify-center gap-2 ${isDarkMode ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30' : 'bg-emerald-50 text-emerald-700 border border-emerald-200'}`}
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                      {settings.backgroundImage ? 'Ganti Foto' : 'Unggah Foto'}
+                    </button>
+                    {settings.backgroundImage && (
+                      <button 
+                        onClick={clearImage}
+                        className="p-3 rounded-xl bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500/20 transition-all"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                      </button>
+                    )}
+                  </div>
+                  <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleImageUpload} />
+                </div>
+              )}
+
+              {/* Overlay Controls */}
+              {settings.backgroundImage && (
+                <div className={`space-y-4 p-4 rounded-2xl border transition-all ${isDarkMode ? 'bg-gray-800/50 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
+                  <div className="flex items-center justify-between">
+                    <label className={`text-xs font-black ${textColor} uppercase tracking-widest`}>Overlay Warna</label>
+                    <input 
+                      type="checkbox" 
+                      className="w-5 h-5 accent-emerald-600"
+                      checked={settings.showOverlay}
+                      onChange={(e) => setSettings({ ...settings, showOverlay: e.target.checked })}
+                    />
+                  </div>
+
+                  {settings.showOverlay && (
+                    <>
+                      <div className="space-y-2">
+                        <label className={`text-[10px] font-bold ${subTextColor} uppercase px-1`}>Warna Overlay</label>
+                        <input 
+                          type="color" 
+                          className={`w-full h-10 p-1 rounded-xl cursor-pointer ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-300'} border-2`}
+                          value={settings.overlayColor}
+                          onChange={(e) => setSettings({ ...settings, overlayColor: e.target.value })}
+                        />
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <div className="flex justify-between items-center mb-1">
+                          <label className={`text-[10px] font-bold ${subTextColor} uppercase px-1`}>Transparansi</label>
+                          <span className={`text-[10px] font-black ${textColor}`}>{settings.overlayOpacity}%</span>
+                        </div>
+                        <input 
+                          type="range" 
+                          min="0" 
+                          max="100" 
+                          className="w-full h-2 bg-emerald-100/30 rounded-lg appearance-none cursor-pointer accent-emerald-600"
+                          value={settings.overlayOpacity}
+                          onChange={(e) => setSettings({ ...settings, overlayOpacity: Number(e.target.value) })}
+                        />
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
             </section>
 
-            {/* Mobile Export Buttons - Part of the scroll area */}
             <section className="pt-4 pb-12 md:hidden">
               <ExportButtons />
             </section>
           </div>
 
-          {/* Desktop Export Buttons - Fixed/Pinned at Bottom */}
           <div className={`hidden md:block px-6 py-6 border-t ${borderColor} ${sidebarBg} shadow-[0_-10px_30px_rgba(0,0,0,0.05)] transition-all flex-shrink-0`}>
             <ExportButtons />
           </div>
