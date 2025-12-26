@@ -64,10 +64,18 @@ const App: React.FC = () => {
     
     try {
       const scale = 3; 
+      // Untuk transparansi yang benar di html-to-image, backgroundColor harus null
       const options = {
         pixelRatio: scale,
         quality: 1,
-        backgroundColor: settings.isTransparent ? null : settings.backgroundColor,
+        backgroundColor: (settings.isTransparent && format === 'png') ? null : settings.backgroundColor,
+        // Cache busting untuk menghindari masalah CORS dengan font Google
+        cacheBust: true,
+        // Menangani stylesheet yang gagal dibaca karena CORS
+        style: {
+          transform: 'scale(1)',
+          transformOrigin: 'top left'
+        }
       };
 
       let dataUrl = '';
@@ -83,6 +91,7 @@ const App: React.FC = () => {
       link.click();
     } catch (err) {
       console.error('Export failed', err);
+      alert('Gagal mengekspor gambar. Pastikan koneksi internet stabil untuk memuat font.');
     } finally {
       setExporting(false);
     }
@@ -173,23 +182,28 @@ const App: React.FC = () => {
               transform: 'scale(var(--preview-scale, 1))',
               '--preview-scale': 'min(1, calc((60vh - 40px) / 640), calc((100vw - 40px) / 360))'
             } as any}
-            className="flex-shrink-0 origin-center"
+            className="flex-shrink-0 origin-center relative"
           >
+            {/* Checkerboard Pattern Wrapper (Hanya untuk preview, tidak ikut diekspor) */}
+            <div 
+              className="absolute inset-0 shadow-[0_50px_100px_rgba(0,0,0,0.3)] rounded-sm overflow-hidden pointer-events-none"
+              style={{
+                backgroundColor: '#ffffff',
+                backgroundImage: settings.isTransparent ? 'linear-gradient(45deg, #ddd 25%, transparent 25%), linear-gradient(-45deg, #ddd 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ddd 75%), linear-gradient(-45deg, transparent 75%, #ddd 75%)' : 'none',
+                backgroundSize: '20px 20px',
+              }}
+            />
+
+            {/* Actual Exportable Canvas */}
             <div 
               ref={canvasRef}
-              className="relative shadow-[0_50px_100px_rgba(0,0,0,0.3)] overflow-hidden transition-all rounded-sm flex-shrink-0"
+              className="relative overflow-hidden transition-all rounded-sm flex-shrink-0 z-10"
               style={{
                 width: '360px', 
                 height: '640px', 
                 backgroundColor: settings.isTransparent ? 'transparent' : settings.backgroundColor,
-                backgroundImage: settings.isTransparent ? 'linear-gradient(45deg, #ddd 25%, transparent 25%), linear-gradient(-45deg, #ddd 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ddd 75%), linear-gradient(-45deg, transparent 75%, #ddd 75%)' : 'none',
-                backgroundSize: settings.isTransparent ? '20px 20px' : 'auto',
               }}
             >
-              {!settings.isTransparent && (
-                 <div className="absolute inset-0 z-0" style={{ backgroundColor: settings.backgroundColor }} />
-              )}
-
               <div className={`absolute inset-0 flex flex-col z-10 ${
                 settings.verticalPosition === 'start' ? 'justify-start pt-24' : 
                 settings.verticalPosition === 'center' ? 'justify-center' : 
