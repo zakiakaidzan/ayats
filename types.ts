@@ -27,12 +27,18 @@ export interface EditorSettings {
   indoAlign: 'left' | 'center' | 'right';
   
   backgroundColor: string;
+  backgroundImage?: string; // Data URL foto
   isTransparent: boolean;
   showSurahInfo: boolean;
-  showDivider: boolean; // Menampilkan/menyembunyikan garis pembatas
+  showDivider: boolean;
   verticalPosition: 'start' | 'center' | 'end';
-  contentGap: number; // Jarak antara ayat dan terjemahan
-  horizontalPadding: number; // Jarak kanan-kiri (padding)
+  contentGap: number;
+  horizontalPadding: number;
+  
+  // Fitur Overlay
+  showOverlay: boolean;
+  overlayColor: string;
+  overlayOpacity: number;
 }
 
 export interface SavedPreset {
