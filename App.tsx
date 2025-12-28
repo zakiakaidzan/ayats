@@ -225,11 +225,11 @@ const App: React.FC = () => {
             <div className="space-y-4">
               <h3 className="text-2xl font-black tracking-tight">Tentang Aplikasi</h3>
               <p className={`text-sm leading-relaxed ${subTextColor}`}>
-                Quran Reel Editor adalah alat bantu untuk membuat visual kutipan ayat Al-Qur'an yang estetis. Dirancang khusus untuk konten media sosial seperti Instagram Reels, YouTube Shorts, dan TikTok.
+                Qoetipan Editor adalah alat bantu untuk membuat visual kutipan ayat Al-Qur'an yang estetis. Dirancang khusus untuk konten media sosial seperti Instagram Reels, YouTube Shorts, dan TikTok.
               </p>
               <div className="pt-4 border-t border-gray-100 dark:border-gray-800">
                 <p className="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-2">Dibuat Oleh</p>
-                <p className="text-lg font-black">Zaki Kaidzan</p>
+                <p className="text-lg font-black">Zakia Kaidzan</p>
               </div>
               <div className="pt-4 space-y-3">
                 <p className="text-[10px] font-black uppercase tracking-widest opacity-50">Hubungkan</p>
@@ -237,6 +237,18 @@ const App: React.FC = () => {
                   <a href="#" className="p-3 bg-gray-100 dark:bg-white/5 rounded-2xl hover:text-emerald-500 transition-all flex items-center gap-2">
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.336 3.608 1.31.974.974 1.248 2.242 1.31 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.336 2.633-1.31 3.608-.974.974-2.242 1.248-3.608 1.31-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.336-3.608-1.31-.974-.974-1.248-2.242-1.31-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.336-2.633 1.31-3.608.974-.974 2.242-1.248 3.608-1.31 1.266-.058-1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.058-1.28.072-1.689.072-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.28-.058-1.689-.072-4.948-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                     <span className="text-xs font-bold">Instagram</span>
+                  </a>
+                  <a href="#" className="p-3 bg-gray-100 dark:bg-white/5 rounded-2xl hover:text-emerald-500 transition-all flex items-center gap-2">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.84 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+                    <span className="text-xs font-bold">Twitter</span>
+                  </a>
+                  <a href="#" className="p-3 bg-gray-100 dark:bg-white/5 rounded-2xl hover:text-emerald-500 transition-all flex items-center gap-2">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
+                    <span className="text-xs font-bold">Facebook</span>
+                  </a>
+                  <a href="#" className="p-3 bg-gray-100 dark:bg-white/5 rounded-2xl hover:text-emerald-500 transition-all flex items-center gap-2">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 24C5.385 24 0 18.615 0 12S5.385 0 12 0s12 5.385 12 12-5.385 12-12 12zm10.12-10.358c-.35-.11-1.35-.31-1.35-.31l-.21.71s-.2 1.34-.45 2.19c-.49 1.74-1.35 3.32-2.5 4.66-.46.54-1.12 1.25-1.7 1.72-1.33 1.09-2.9 1.83-4.63 2.15-1.56.28-3.19.06-4.65-.63-1.07-.5-1.98-1.25-2.73-2.19-.74-.93-1.27-2.01-1.56-3.16-.27-1.1-.31-2.24-.13-3.34.18-1.1.56-2.15 1.12-3.1.56-.94 1.31-1.74 2.19-2.38.87-.63 1.87-1.09 2.94-1.35 1.07-.26 2.18-.32 3.28-.18 1.11.14 2.17.48 3.14 1 .98.51 1.84 1.22 2.53 2.07.69.86 1.21 1.84 1.53 2.89.2.66.41 2.37.41 2.37l.79.24.47-.72c.3-.46.54-.95.73-1.46.18-.51.29-1.04.33-1.58.03-.54-.01-1.08-.13-1.61-.11-.53-.3-1.04-.56-1.52a8.941 8.941 0 00-2.43-2.82c-.93-.73-2-1.27-3.15-1.59-1.15-.32-2.35-.42-3.53-.29-1.19.13-2.34.48-3.39 1.03-1.05.55-1.97 1.29-2.73 2.19-.75.89-1.31 1.93-1.64 3.04-.33 1.11-.42 2.28-.27 3.44.15 1.16.51 2.27 1.06 3.29.54 1.01 1.28 1.9 2.17 2.62.88.72 1.9 1.26 2.99 1.58 1.1.31 2.24.41 3.39.29 1.15-.12 2.26-.45 3.28-.98 1.01-.52 1.9-1.22 2.64-2.07.74-.85 1.3-1.83 1.66-2.89.1-.3.15-.6.18-.91.03-.31.02-.63-.03-.94a4.43 4.43 0 00-.54-1.55c-.25-.45-.58-.86-.97-1.2-.4-.34-.84-.61-1.33-.8-1.03-.4-2.13-.53-3.21-.38-1.08.15-2.09.56-2.95 1.2-.86.63-1.56 1.45-2.04 2.4-.48.94-.74 1.99-.75 3.05-.01 1.06.23 2.11.7 3.06.47.95 1.14 1.77 1.96 2.41.83.63 1.8 1.07 2.82 1.28a8.216 8.216 0 003.22-.09c1.02-.27 1.96-.77 2.76-1.46.8-.68 1.45-1.54 1.91-2.5.46-.96.72-2.01.76-3.08.03-1.07-.18-2.13-.62-3.1a8.681 8.681 0 00-2.31-2.82c-.89-.72-1.92-1.25-3.03-1.56-1.1-.31-2.26-.4-3.41-.27s-2.26.47-3.27 1.01c-1.01.54-1.89 1.27-2.61 2.15s-1.26 1.88-1.58 2.97-.4 2.23-.25 3.35.5 2.19 1.03 3.17c.53.98 1.24 1.84 2.1 2.54.85.7 1.83 1.22 2.89 1.54 1.06.31 2.17.41 3.28.31 1.11-.1 2.19-.42 3.18-.93 1-.51 1.88-1.19 2.61-2.02.73-.83 1.29-1.78 1.66-2.81a8.42 8.42 0 00.5-2.24c.05-.38.07-.76.05-1.14-.02-.38-.08-.76-.18-1.13z"/></svg>
+                    <span className="text-xs font-bold">Dribbble</span>
                   </a>
                 </div>
               </div>
@@ -251,14 +263,14 @@ const App: React.FC = () => {
           <div className="bg-emerald-600 p-2 rounded-lg shadow-md">
             <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
           </div>
-          <h1 className={`text-lg md:text-xl font-black tracking-tight ${textColor}`}>Qutipan Qur'An</h1>
+          <h1 className={`text-lg md:text-xl font-black tracking-tight ${textColor}`}>Qoetipan</h1>
         </div>
         <div className="flex items-center gap-2">
-          <button onClick={toggleDarkMode} className={`p-2.5 rounded-full transition-all active:scale-90 ${isDarkMode ? 'bg-gray-800 text-yellow-400 border border-gray-700' : 'bg-gray-200 text-gray-700 border border-gray-300'}`}>
-            {isDarkMode ? <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" /></svg> : <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" /></svg>}
-          </button>
           <button onClick={() => setShowInfoModal(true)} className={`p-2.5 rounded-full transition-all active:scale-90 ${isDarkMode ? 'bg-gray-800 text-gray-400 border border-gray-700' : 'bg-gray-200 text-gray-600 border border-gray-300'}`}>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          </button>
+          <button onClick={toggleDarkMode} className={`p-2.5 rounded-full transition-all active:scale-90 ${isDarkMode ? 'bg-gray-800 text-yellow-400 border border-gray-700' : 'bg-gray-200 text-gray-700 border border-gray-300'}`}>
+            {isDarkMode ? <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" /></svg> : <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" /></svg>}
           </button>
         </div>
       </header>
@@ -399,6 +411,22 @@ const App: React.FC = () => {
                       <div className="flex justify-between text-[10px] font-black uppercase"><span>Padding Horizontal</span><span>{settings.horizontalPadding}px</span></div>
                       <input type="range" min="0" max="100" className="w-full h-2 rounded-lg appearance-none bg-gray-200 dark:bg-gray-700 accent-emerald-500" value={settings.horizontalPadding} onChange={(e) => setSettings({...settings, horizontalPadding: Number(e.target.value)})} />
                     </div>
+                    
+                    {/* RESTORED TOGGLE CONTROLS */}
+                    <div className="space-y-3 pt-4 border-t border-gray-100 dark:border-gray-800">
+                      <div className={`flex items-center justify-between p-5 rounded-2xl border ${borderColor} ${isDarkMode ? 'bg-white/5' : 'bg-white shadow-sm'}`}>
+                        <span className="text-sm font-bold">Tampilkan Terjemahan</span>
+                        <input type="checkbox" className="w-6 h-6 accent-emerald-600 rounded-lg" checked={settings.showTranslation} onChange={(e) => setSettings({...settings, showTranslation: e.target.checked})} />
+                      </div>
+                      <div className={`flex items-center justify-between p-5 rounded-2xl border ${borderColor} ${isDarkMode ? 'bg-white/5' : 'bg-white shadow-sm'}`}>
+                        <span className="text-sm font-bold">Info Surat & Ayat</span>
+                        <input type="checkbox" className="w-6 h-6 accent-emerald-600 rounded-lg" checked={settings.showSurahInfo} onChange={(e) => setSettings({...settings, showSurahInfo: e.target.checked})} />
+                      </div>
+                      <div className={`flex items-center justify-between p-5 rounded-2xl border ${borderColor} ${isDarkMode ? 'bg-white/5' : 'bg-white shadow-sm'}`}>
+                        <span className="text-sm font-bold">Garis Pembatas</span>
+                        <input type="checkbox" className="w-6 h-6 accent-emerald-600 rounded-lg" checked={settings.showDivider} onChange={(e) => setSettings({...settings, showDivider: e.target.checked})} />
+                      </div>
+                    </div>
                   </div>
                 </section>
               )}
@@ -426,7 +454,7 @@ const App: React.FC = () => {
                       {presets.map(p => (
                         <div key={p.id} className="group relative flex items-center gap-3 p-4 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-emerald-500/50 transition-all bg-white dark:bg-white/5 shadow-sm">
                           <button onClick={() => loadPreset(p)} className="flex-1 text-left font-bold text-sm tracking-tight">{p.name}</button>
-                          <button onClick={() => deletePreset(p.id)} className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-xl transition-all"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button>
+                          <button onClick={() => deletePreset(p.id)} className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-xl transition-all"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1-1v3M4 7h16" /></svg></button>
                         </div>
                       ))}
                     </div>
@@ -452,9 +480,14 @@ const App: React.FC = () => {
               {settings.backgroundImage && <div className="absolute inset-0 z-0"><img src={settings.backgroundImage} className="w-full h-full object-cover" alt="Background" />{settings.showOverlay && <div className="absolute inset-0 z-0 transition-all" style={{ backgroundColor: settings.overlayColor, opacity: settings.overlayOpacity / 100 }} />}</div>}
               <div className={`absolute inset-0 flex flex-col z-10 ${settings.verticalPosition === 'start' ? 'justify-start pt-24' : settings.verticalPosition === 'center' ? 'justify-center' : 'justify-end pb-24'}`} style={{ paddingLeft: `${settings.horizontalPadding}px`, paddingRight: `${settings.horizontalPadding}px` }}>
                 {loading ? <div className="flex justify-center w-full"><div className="animate-spin rounded-full h-10 w-10 border-4 border-emerald-600 border-t-transparent shadow-xl"></div></div> : verseData ? <>
-                  <div className="w-full" style={{ fontFamily: settings.arabicFont, fontSize: `${settings.arabicSize}px`, color: settings.arabicColor, lineHeight: settings.arabicLineHeight, textAlign: settings.arabicAlign, direction: 'rtl', marginBottom: settings.showTranslation ? `${settings.contentGap}px` : '0px', textShadow: settings.backgroundImage ? '0 2px 10px rgba(0,0,0,0.5)' : 'none' }}>{verseData.teksArab}</div>
+                  <div className="w-full" style={{ fontFamily: settings.arabicFont, fontSize: `${settings.arabicSize}px`, color: settings.arabicColor, lineHeight: settings.arabicLineHeight, textAlign: settings.arabicAlign, direction: 'rtl', marginBottom: (settings.showTranslation && settings.contentGap > 0) ? `${settings.contentGap}px` : '0px', textShadow: settings.backgroundImage ? '0 2px 10px rgba(0,0,0,0.5)' : 'none' }}>{verseData.teksArab}</div>
                   {settings.showTranslation && <div className="w-full" style={{ fontFamily: settings.indoFont, fontSize: `${settings.indoSize}px`, color: settings.indoColor, lineHeight: settings.indoLineHeight, textAlign: settings.indoAlign, textShadow: settings.backgroundImage ? '0 2px 10px rgba(0,0,0,0.5)' : 'none' }}>{verseData.teksIndonesia}</div>}
-                  {settings.showSurahInfo && <div className={`mt-8 pt-5 w-full flex justify-between items-end opacity-70 text-[11px] uppercase tracking-widest font-black ${settings.showDivider ? 'border-t border-current/20' : ''} ${settings.verticalPosition === 'end' ? 'order-first mb-8 mt-0 border-t-0 pb-5' : ''} ${settings.verticalPosition === 'end' && settings.showDivider ? 'border-b border-current/20' : ''}`} style={{ color: settings.indoColor, textShadow: settings.backgroundImage ? '0 2px 10px rgba(0,0,0,0.5)' : 'none' }}><span>QS. {surahs.find(s => s.nomor === selectedSurah)?.namaLatin}</span><span>Ayat {selectedVerse}</span></div>}
+                  {settings.showSurahInfo && (
+                    <div className={`mt-8 pt-5 w-full flex justify-between items-end opacity-70 text-[11px] uppercase tracking-widest font-black ${settings.showDivider ? 'border-t border-current/20' : ''} ${settings.verticalPosition === 'end' ? 'order-first mb-8 mt-0 border-t-0 pb-5' : ''} ${settings.verticalPosition === 'end' && settings.showDivider ? 'border-b border-current/20' : ''}`} style={{ color: settings.indoColor, textShadow: settings.backgroundImage ? '0 2px 10px rgba(0,0,0,0.5)' : 'none' }}>
+                      <span>QS. {surahs.find(s => s.nomor === selectedSurah)?.namaLatin}</span>
+                      <span>Ayat {selectedVerse}</span>
+                    </div>
+                  )}
                 </> : <div className={`text-center space-y-4 ${subTextColor}`}><svg className="w-16 h-16 mx-auto opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg><p className="font-black uppercase text-[10px] tracking-widest">Pilih Ayat Untuk Memulai</p></div>}
               </div>
             </div>
