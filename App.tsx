@@ -23,14 +23,13 @@ const App: React.FC = () => {
 
   const [settings, setSettings] = useState<EditorSettings>({
     arabicFont: ARABIC_FONTS[0].family,
-    // Fix: Remove duplicate property definitions for arabicSize and arabicColor
     arabicSize: 42,
     arabicColor: '#1a1a1a',
-    arabicLineHeight: 1.6,
+    arabicLineHeight: 1.8,
     arabicAlign: 'center',
     
     indoFont: INDO_FONTS[0].family,
-    indoSize: 20,
+    indoSize: 18,
     indoColor: '#374151',
     indoLineHeight: 1.5,
     indoAlign: 'center',
@@ -42,8 +41,8 @@ const App: React.FC = () => {
     showDivider: true,
     showTranslation: true,
     verticalPosition: 'center',
-    contentGap: 32,
-    horizontalPadding: 32,
+    contentGap: 40,
+    horizontalPadding: 40,
 
     showOverlay: true,
     overlayColor: '#000000',
@@ -81,6 +80,12 @@ const App: React.FC = () => {
       s.nomor.toString().includes(searchTerm)
     );
   }, [surahs, searchTerm]);
+
+  const handleSurahChange = (num: number) => {
+    setSelectedSurah(num);
+    setSelectedVerse(1);
+    setSearchTerm(''); // Clear search on selection for better UX
+  };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -135,7 +140,7 @@ const App: React.FC = () => {
 
   const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
 
-  // UI Colors - Synchronized with theme
+  // UI Colors
   const uiBg = isDarkMode ? 'bg-black' : 'bg-gray-50';
   const sidebarBg = isDarkMode ? 'bg-[#0f1115]' : 'bg-white';
   const previewContainerBg = isDarkMode ? 'bg-black' : 'bg-gray-100';
@@ -202,20 +207,8 @@ const App: React.FC = () => {
                 <p className="text-[10px] font-black uppercase tracking-widest opacity-50">Hubungkan</p>
                 <div className="flex flex-wrap gap-3">
                   <a href="#" className="p-3 bg-gray-100 dark:bg-white/5 rounded-2xl hover:text-emerald-500 transition-all flex items-center gap-2">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.336 3.608 1.31.974.974 1.248 2.242 1.31 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.336 2.633-1.31 3.608-.974.974-2.242 1.248-3.608 1.31-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.336-3.608-1.31-.974-.974-1.248-2.242-1.31-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.336-2.633 1.31-3.608.974-.974 2.242-1.248 3.608-1.31 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.058-1.28.072-1.689.072-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.28-.058-1.689-.072-4.948-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.336 3.608 1.31.974.974 1.248 2.242 1.31 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.336 2.633-1.31 3.608-.974.974-2.242 1.248-3.608 1.31-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.336-3.608-1.31-.974-.974-1.248-2.242-1.31-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.336-2.633 1.31-3.608.974-.974 2.242-1.248 3.608-1.31 1.266-.058-1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.058-1.28.072-1.689.072-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.28-.058-1.689-.072-4.948-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                     <span className="text-xs font-bold">Instagram</span>
-                  </a>
-                  <a href="#" className="p-3 bg-gray-100 dark:bg-white/5 rounded-2xl hover:text-emerald-500 transition-all flex items-center gap-2">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.84 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
-                    <span className="text-xs font-bold">Twitter</span>
-                  </a>
-                  <a href="#" className="p-3 bg-gray-100 dark:bg-white/5 rounded-2xl hover:text-emerald-500 transition-all flex items-center gap-2">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
-                    <span className="text-xs font-bold">Facebook</span>
-                  </a>
-                  <a href="#" className="p-3 bg-gray-100 dark:bg-white/5 rounded-2xl hover:text-emerald-500 transition-all flex items-center gap-2">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 24C5.385 24 0 18.615 0 12S5.385 0 12 0s12 5.385 12 12-5.385 12-12 12zm10.12-10.358c-.35-.11-1.35-.31-1.35-.31l-.21.71s-.2 1.34-.45 2.19c-.49 1.74-1.35 3.32-2.5 4.66-.46.54-1.12 1.25-1.7 1.72-1.33 1.09-2.9 1.83-4.63 2.15-1.56.28-3.19.06-4.65-.63-1.07-.5-1.98-1.25-2.73-2.19-.74-.93-1.27-2.01-1.56-3.16-.27-1.1-.31-2.24-.13-3.34.18-1.1.56-2.15 1.12-3.1.56-.94 1.31-1.74 2.19-2.38.87-.63 1.87-1.09 2.94-1.35 1.07-.26 2.18-.32 3.28-.18 1.11.14 2.17.48 3.14 1 .98.51 1.84 1.22 2.53 2.07.69.86 1.21 1.84 1.53 2.89.2.66.41 2.37.41 2.37l.79.24.47-.72c.3-.46.54-.95.73-1.46.18-.51.29-1.04.33-1.58.03-.54-.01-1.08-.13-1.61-.11-.53-.3-1.04-.56-1.52a8.941 8.941 0 00-2.43-2.82c-.93-.73-2-1.27-3.15-1.59-1.15-.32-2.35-.42-3.53-.29-1.19.13-2.34.48-3.39 1.03-1.05.55-1.97 1.29-2.73 2.19-.75.89-1.31 1.93-1.64 3.04-.33 1.11-.42 2.28-.27 3.44.15 1.16.51 2.27 1.06 3.29.54 1.01 1.28 1.9 2.17 2.62.88.72 1.9 1.26 2.99 1.58 1.1.31 2.24.41 3.39.29 1.15-.12 2.26-.45 3.28-.98 1.01-.52 1.9-1.22 2.64-2.07.74-.85 1.3-1.83 1.66-2.89.1-.3.15-.6.18-.91.03-.31.02-.63-.03-.94a4.43 4.43 0 00-.54-1.55c-.25-.45-.58-.86-.97-1.2-.4-.34-.84-.61-1.33-.8-1.03-.4-2.13-.53-3.21-.38-1.08.15-2.09.56-2.95 1.2-.86.63-1.56 1.45-2.04 2.4-.48.94-.74 1.99-.75 3.05-.01 1.06.23 2.11.7 3.06.47.95 1.14 1.77 1.96 2.41.83.63 1.8 1.07 2.82 1.28a8.216 8.216 0 003.22-.09c1.02-.27 1.96-.77 2.76-1.46.8-.68 1.45-1.54 1.91-2.5.46-.96.72-2.01.76-3.08.03-1.07-.18-2.13-.62-3.1a8.681 8.681 0 00-2.31-2.82c-.89-.72-1.92-1.25-3.03-1.56-1.1-.31-2.26-.4-3.41-.27s-2.26.47-3.27 1.01c-1.01.54-1.89 1.27-2.61 2.15s-1.26 1.88-1.58 2.97-.4 2.23-.25 3.35.5 2.19 1.03 3.17c.53.98 1.24 1.84 2.1 2.54.85.7 1.83 1.22 2.89 1.54 1.06.31 2.17.41 3.28.31 1.11-.1 2.19-.42 3.18-.93 1-.51 1.88-1.19 2.61-2.02.73-.83 1.29-1.78 1.66-2.81a8.42 8.42 0 00.5-2.24c.05-.38.07-.76.05-1.14-.02-.38-.08-.76-.18-1.13z"/></svg>
-                    <span className="text-xs font-bold">Dribbble</span>
                   </a>
                 </div>
               </div>
@@ -253,7 +246,7 @@ const App: React.FC = () => {
         } absolute md:relative bottom-[75px] md:bottom-0 left-0 right-0 h-[500px] md:h-full`}>
           
           {/* 1. RAIL IKON (Desktop Only) */}
-          <div className="hidden md:flex flex-col w-24 border-r border-gray-100 dark:border-gray-800 flex-shrink-0 bg-gray-50/50 dark:bg-black/20">
+          <div className={`hidden md:flex flex-col w-24 border-r border-gray-100 dark:border-gray-800 flex-shrink-0 transition-colors ${isDarkMode ? 'bg-[#0a0c10]' : 'bg-white'}`}>
             <NavItem id="verse" desktop />
             <NavItem id="style" desktop />
             <NavItem id="layout" desktop />
@@ -281,10 +274,54 @@ const App: React.FC = () => {
               {activeTab === 'verse' && (
                 <section className="space-y-6 animate-in slide-in-from-right-4 duration-300">
                   <div className="space-y-4">
-                    <div className="relative"><input type="text" placeholder="Cari Surah..." className={`w-full p-3.5 pl-11 rounded-2xl text-sm outline-none transition-all ${inputBg}`} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} /><svg className="w-4 h-4 absolute left-4 top-4 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg></div>
+                    <div className="relative">
+                      <input 
+                        type="text" 
+                        placeholder="Cari Surah..." 
+                        className={`w-full p-3.5 pl-11 rounded-2xl text-sm outline-none transition-all ${inputBg}`} 
+                        value={searchTerm} 
+                        onChange={(e) => setSearchTerm(e.target.value)} 
+                      />
+                      <svg className="w-4 h-4 absolute left-4 top-4 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                      
+                      {/* Search Suggestions */}
+                      {searchTerm && filteredSurahs.length > 0 && (
+                        <div className={`absolute left-0 right-0 mt-2 p-2 rounded-2xl border shadow-2xl z-50 max-h-60 overflow-y-auto ${sidebarBg} ${borderColor}`}>
+                          {filteredSurahs.map(s => (
+                            <button 
+                              key={s.nomor} 
+                              onClick={() => handleSurahChange(s.nomor)}
+                              className={`w-full text-left p-3 rounded-xl text-sm transition-all hover:bg-emerald-500 hover:text-white flex justify-between items-center group`}
+                            >
+                              <span>{s.nomor}. {s.namaLatin}</span>
+                              <span className="text-[10px] opacity-50 group-hover:opacity-100">{s.jumlahAyat} Ayat</span>
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    
                     <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-1.5"><label className="text-[10px] font-black uppercase px-1 opacity-50">Surah</label><select className={`w-full p-3 rounded-2xl text-sm outline-none cursor-pointer ${inputBg}`} value={selectedSurah} onChange={(e) => { setSelectedSurah(Number(e.target.value)); setSelectedVerse(1); }}>{filteredSurahs.map(s => <option key={s.nomor} value={s.nomor}>{s.nomor}. {s.namaLatin}</option>)}</select></div>
-                      <div className="space-y-1.5"><label className="text-[10px] font-black uppercase px-1 opacity-50">Ayat</label><select className={`w-full p-3 rounded-2xl text-sm outline-none cursor-pointer ${inputBg}`} value={selectedVerse} onChange={(e) => setSelectedVerse(Number(e.target.value))}>{Array.from({ length: surahs.find(s => s.nomor === selectedSurah)?.jumlahAyat || 0 }, (_, i) => i + 1).map(v => (<option key={v} value={v}>Ayat {v}</option>))}</select></div>
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-black uppercase px-1 opacity-50">Surah</label>
+                        <select 
+                          className={`w-full p-3 rounded-2xl text-sm outline-none cursor-pointer ${inputBg}`} 
+                          value={selectedSurah} 
+                          onChange={(e) => handleSurahChange(Number(e.target.value))}
+                        >
+                          {surahs.map(s => <option key={s.nomor} value={s.nomor}>{s.nomor}. {s.namaLatin}</option>)}
+                        </select>
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-black uppercase px-1 opacity-50">Ayat</label>
+                        <select 
+                          className={`w-full p-3 rounded-2xl text-sm outline-none cursor-pointer ${inputBg}`} 
+                          value={selectedVerse} 
+                          onChange={(e) => setSelectedVerse(Number(e.target.value))}
+                        >
+                          {Array.from({ length: surahs.find(s => s.nomor === selectedSurah)?.jumlahAyat || 0 }, (_, i) => i + 1).map(v => (<option key={v} value={v}>Ayat {v}</option>))}
+                        </select>
+                      </div>
                     </div>
                     {verseData && !loading && (
                       <div className="space-y-5 pt-4">
@@ -299,15 +336,58 @@ const App: React.FC = () => {
               {activeTab === 'style' && (
                 <section className="space-y-8 animate-in slide-in-from-right-4 duration-300">
                   <div className="space-y-6">
-                    <div className={`p-5 rounded-3xl border ${borderColor} ${isDarkMode ? 'bg-white/5' : 'bg-white shadow-sm'}`}>
-                      <div className="flex justify-between items-center mb-6"><span className="text-xs font-black uppercase text-emerald-600">Font Al-Qur'an</span><input type="color" className="w-10 h-10 rounded-xl border-4 border-white shadow-xl cursor-pointer" value={settings.arabicColor} onChange={(e) => setSettings({...settings, arabicColor: e.target.value})} /></div>
-                      <select className={`w-full p-3.5 rounded-2xl text-sm mb-6 ${inputBg}`} value={settings.arabicFont} onChange={(e) => setSettings({...settings, arabicFont: e.target.value})}>{ARABIC_FONTS.map(f => <option key={f.name} value={f.family}>{f.name}</option>)}</select>
-                      <div className="space-y-2"><div className="flex justify-between text-[10px] font-black uppercase opacity-60"><span>Ukuran Font</span><span>{settings.arabicSize}px</span></div><input type="range" min="20" max="150" className="w-full h-2 rounded-lg appearance-none bg-gray-200 dark:bg-gray-700 accent-emerald-500" value={settings.arabicSize} onChange={(e) => setSettings({...settings, arabicSize: Number(e.target.value)})} /></div>
+                    {/* Arabic Style Section */}
+                    <div className={`p-5 rounded-3xl border ${borderColor} ${isDarkMode ? 'bg-white/5 shadow-[0_0_20px_rgba(0,0,0,0.5)]' : 'bg-white shadow-sm'}`}>
+                      <div className="flex justify-between items-center mb-6">
+                        <div className="flex flex-col">
+                          <span className="text-xs font-black uppercase text-emerald-600">Tipografi Al-Qur'an</span>
+                          <span className="text-[9px] opacity-40 uppercase font-bold tracking-widest mt-0.5">Edit Gaya Teks Arab</span>
+                        </div>
+                        <input type="color" className="w-10 h-10 rounded-xl border-4 border-white shadow-xl cursor-pointer" value={settings.arabicColor} onChange={(e) => setSettings({...settings, arabicColor: e.target.value})} />
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <select className={`w-full p-3.5 rounded-2xl text-sm ${inputBg}`} value={settings.arabicFont} onChange={(e) => setSettings({...settings, arabicFont: e.target.value})}>
+                          {ARABIC_FONTS.map(f => <option key={f.name} value={f.family}>{f.name}</option>)}
+                        </select>
+                        
+                        <div className="space-y-2">
+                          <div className="flex justify-between text-[10px] font-black uppercase opacity-60"><span>Ukuran Font</span><span>{settings.arabicSize}px</span></div>
+                          <input type="range" min="20" max="150" className="w-full h-2 rounded-lg appearance-none bg-gray-200 dark:bg-gray-700 accent-emerald-500" value={settings.arabicSize} onChange={(e) => setSettings({...settings, arabicSize: Number(e.target.value)})} />
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <div className="flex justify-between text-[10px] font-black uppercase opacity-60"><span>Spasi Baris Arab</span><span>{settings.arabicLineHeight}</span></div>
+                          <input type="range" min="1" max="3" step="0.1" className="w-full h-2 rounded-lg appearance-none bg-gray-200 dark:bg-gray-700 accent-emerald-500" value={settings.arabicLineHeight} onChange={(e) => setSettings({...settings, arabicLineHeight: Number(e.target.value)})} />
+                        </div>
+                      </div>
                     </div>
+
+                    {/* Translation Style Section */}
                     <div className={`p-5 rounded-3xl border ${borderColor} ${isDarkMode ? 'bg-white/5' : 'bg-white shadow-sm'}`}>
-                      <div className="flex justify-between items-center mb-6"><span className="text-xs font-black uppercase opacity-60">Font Terjemahan</span><input type="color" className="w-10 h-10 rounded-xl border-4 border-white shadow-xl cursor-pointer" value={settings.indoColor} onChange={(e) => setSettings({...settings, indoColor: e.target.value})} /></div>
-                      <select className={`w-full p-3.5 rounded-2xl text-sm mb-6 ${inputBg}`} value={settings.indoFont} onChange={(e) => setSettings({...settings, indoFont: e.target.value})}>{INDO_FONTS.map(f => <option key={f.name} value={f.family}>{f.name}</option>)}</select>
-                      <div className="space-y-2"><div className="flex justify-between text-[10px] font-black uppercase opacity-60"><span>Ukuran Font</span><span>{settings.indoSize}px</span></div><input type="range" min="10" max="80" className="w-full h-2 rounded-lg appearance-none bg-gray-200 dark:bg-gray-700 accent-emerald-500" value={settings.indoSize} onChange={(e) => setSettings({...settings, indoSize: Number(e.target.value)})} /></div>
+                      <div className="flex justify-between items-center mb-6">
+                        <div className="flex flex-col">
+                          <span className="text-xs font-black uppercase opacity-60">Tipografi Terjemahan</span>
+                          <span className="text-[9px] opacity-40 uppercase font-bold tracking-widest mt-0.5">Edit Gaya Teks Indonesia</span>
+                        </div>
+                        <input type="color" className="w-10 h-10 rounded-xl border-4 border-white shadow-xl cursor-pointer" value={settings.indoColor} onChange={(e) => setSettings({...settings, indoColor: e.target.value})} />
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <select className={`w-full p-3.5 rounded-2xl text-sm ${inputBg}`} value={settings.indoFont} onChange={(e) => setSettings({...settings, indoFont: e.target.value})}>
+                          {INDO_FONTS.map(f => <option key={f.name} value={f.family}>{f.name}</option>)}
+                        </select>
+                        
+                        <div className="space-y-2">
+                          <div className="flex justify-between text-[10px] font-black uppercase opacity-60"><span>Ukuran Font</span><span>{settings.indoSize}px</span></div>
+                          <input type="range" min="10" max="80" className="w-full h-2 rounded-lg appearance-none bg-gray-200 dark:bg-gray-700 accent-emerald-500" value={settings.indoSize} onChange={(e) => setSettings({...settings, indoSize: Number(e.target.value)})} />
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <div className="flex justify-between text-[10px] font-black uppercase opacity-60"><span>Spasi Baris Terjemahan</span><span>{settings.indoLineHeight}</span></div>
+                          <input type="range" min="1" max="2.5" step="0.1" className="w-full h-2 rounded-lg appearance-none bg-gray-200 dark:bg-gray-700 accent-emerald-500" value={settings.indoLineHeight} onChange={(e) => setSettings({...settings, indoLineHeight: Number(e.target.value)})} />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </section>
@@ -319,8 +399,20 @@ const App: React.FC = () => {
                     {(['start', 'center', 'end'] as const).map(pos => (<button key={pos} className={`flex-1 py-3.5 rounded-xl text-[10px] font-black transition-all ${settings.verticalPosition === pos ? 'bg-emerald-500 text-white shadow-xl scale-105' : 'text-gray-500 hover:text-gray-700'}`} onClick={() => setSettings({...settings, verticalPosition: pos})}>{pos === 'start' ? 'ATAS' : pos === 'center' ? 'TENGAH' : 'BAWAH'}</button>))}
                   </div>
                   <div className="space-y-6">
-                    <div className="space-y-3"><div className="flex justify-between text-[10px] font-black opacity-60 uppercase"><span>Spasi Antar Baris</span><span>{settings.contentGap}px</span></div><input type="range" min="0" max="150" className="w-full h-2 rounded-lg appearance-none bg-gray-200 dark:bg-gray-700 accent-emerald-500" value={settings.contentGap} onChange={(e) => setSettings({...settings, contentGap: Number(e.target.value)})} /></div>
-                    <div className="space-y-3"><div className="flex justify-between text-[10px] font-black uppercase uppercase"><span>Margin Horizontal</span><span>{settings.horizontalPadding}px</span></div><input type="range" min="0" max="100" className="w-full h-2 rounded-lg appearance-none bg-gray-200 dark:bg-gray-700 accent-emerald-500" value={settings.horizontalPadding} onChange={(e) => setSettings({...settings, horizontalPadding: Number(e.target.value)})} /></div>
+                    <div className="space-y-3">
+                      <div className="flex justify-between text-[10px] font-black opacity-60 uppercase">
+                        <span>Jarak Arab ke Terjemahan</span>
+                        <span>{settings.contentGap}px</span>
+                      </div>
+                      <input type="range" min="0" max="150" className="w-full h-2 rounded-lg appearance-none bg-gray-200 dark:bg-gray-700 accent-emerald-500" value={settings.contentGap} onChange={(e) => setSettings({...settings, contentGap: Number(e.target.value)})} />
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex justify-between text-[10px] font-black uppercase">
+                        <span>Padding Horizontal</span>
+                        <span>{settings.horizontalPadding}px</span>
+                      </div>
+                      <input type="range" min="0" max="100" className="w-full h-2 rounded-lg appearance-none bg-gray-200 dark:bg-gray-700 accent-emerald-500" value={settings.horizontalPadding} onChange={(e) => setSettings({...settings, horizontalPadding: Number(e.target.value)})} />
+                    </div>
                   </div>
                   <div className="space-y-3">
                     <div className={`flex items-center justify-between p-5 rounded-2xl border ${borderColor} ${isDarkMode ? 'bg-white/5' : 'bg-white shadow-sm'}`}><span className="text-sm font-bold">Tampilkan Terjemahan</span><input type="checkbox" className="w-6 h-6 accent-emerald-600 rounded-lg" checked={settings.showTranslation} onChange={(e) => setSettings({...settings, showTranslation: e.target.checked})} /></div>
@@ -364,7 +456,7 @@ const App: React.FC = () => {
                       {presets.map(p => (
                         <div key={p.id} className="group relative flex items-center gap-3 p-4 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-emerald-500/50 transition-all bg-white dark:bg-white/5 shadow-sm">
                           <button onClick={() => loadPreset(p)} className="flex-1 text-left font-bold text-sm tracking-tight">{p.name}</button>
-                          <button onClick={() => deletePreset(p.id)} className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-xl transition-all"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1-1v3M4 7h16" /></svg></button>
+                          <button onClick={() => deletePreset(p.id)} className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-xl transition-all"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button>
                         </div>
                       ))}
                     </div>
