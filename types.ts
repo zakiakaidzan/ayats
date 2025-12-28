@@ -31,6 +31,7 @@ export interface EditorSettings {
   isTransparent: boolean;
   showSurahInfo: boolean;
   showDivider: boolean;
+  showTranslation: boolean; // Fitur baru: Tampilkan/Sembunyikan terjemahan
   verticalPosition: 'start' | 'center' | 'end';
   contentGap: number;
   horizontalPadding: number;
